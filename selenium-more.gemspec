@@ -1,11 +1,7 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'selenium/more/version'
-
 Gem::Specification.new do |spec|
   spec.name          = "selenium-more"
-  spec.version       = Selenium::More::VERSION
+  spec.version       = File.read(File.expand_path("VERSION", File.dirname(__FILE__))).chomp
   spec.authors       = ["okitan"]
   spec.email         = ["okitakunio@gmail.com"]
   spec.summary       = %q{TODO: Write a short summary. Required.}
