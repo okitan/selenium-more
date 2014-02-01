@@ -25,5 +25,9 @@ _DESCRIPTION_
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake"
 
+  # test
   spec.add_runtime_dependency "rspec", "~> 3.0.0.beta"
+
+  # auto test
+  spec.add_runtime_dependency "guard-rspec"
 end
