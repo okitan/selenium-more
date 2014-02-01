@@ -4,9 +4,15 @@ Gem::Specification.new do |spec|
   spec.version       = File.read(File.expand_path("VERSION", File.dirname(__FILE__))).chomp
   spec.authors       = ["okitan"]
   spec.email         = ["okitakunio@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = "Selenium WebDriver Utilities."
+  spec.description   = <<_DESCRIPTION_
+Selenium WebDriver Utilities.
+- Many hook points for selenium-webdirver.
+- Manage multiple sessions
+- Implicit and Explicit wait
+- Retry
+_DESCRIPTION_
+  spec.homepage      = "https://github.com/okitan/selenium-more"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

@@ -1,6 +1,14 @@
 # Selenium::More
 
-TODO: Write a gem description
+Selenium WebDriver utilities.
+
+## Features
+
+* hook interface to selenium-driver
+* utilities for test
+** session management
+** implicit and explicit wait
+** retry
 
 ## Installation
 
@@ -18,7 +26,21 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Hooks
+
+T.B.D.
+
+### session management
+
+T.B.D.
+
+### Implicit and Explicit wait
+
+T.B.D.
+
+### retry
+
+T.B.D.
 
 ## Contributing
 
