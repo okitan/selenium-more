@@ -48,5 +48,17 @@ describe Selenium::WebDriver::Driver, "with", Selenium::More::Hooks do
         expect { driver.current_url }.to change { driver.spy }.to(original_driver.current_url)
       end
     end
+
+    context "when no method is available" do
+      it "raise NoMethodError" do
+        expect {
+          Class.new(described_class) do
+            include Selenium::More::Hooks
+
+            hook :hoge, before: ->(driver) { driver }
+          end
+        }.to raise_exception(NoMethodError, "no hoge to hook")
+      end
+    end
   end
 end
