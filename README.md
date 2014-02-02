@@ -1,4 +1,4 @@
-# Selenium::More
+# Selenium::More [![Build Status](https://travis-ci.org/okitan/selenium-more.png?branch=master)](https://travis-ci.org/okitan/selenium-more)
 
 Selenium WebDriver utilities.
 
@@ -28,7 +28,27 @@ Or install it yourself as:
 
 ### Hooks
 
-T.B.D.
+When you include ::Selenium::More::Hooks to ::Selenium::WebDriver::Driver, you can add before/after hook to any existing driver function.
+
+Sample Code:
+```ruby
+class Selenium::WebDriver::Driver
+  include Selenium::More::Hooks
+
+  hook :get, before: ->(driver)      { puts driver.current_url }
+             after:  ->(driver, ret) { puts driver.currnent_url }
+end
+
+driver = Selenium::WebDriver.for :phantomjs
+
+drvier.get "http://example.com/"
+```
+
+It prints.
+```
+about:blank
+http://example.com/
+```
 
 ### session management
 
