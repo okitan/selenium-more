@@ -13,8 +13,10 @@ describe Selenium::WebDriver::Driver, "with", Selenium::More::Hooks do
             @spy ||= []
           end
 
-          hook :current_url, before: ->(driver)      { driver.spy << "before_hook" },
-                             after:  ->(driver, ret) { driver.spy << "after_hook" }
+          hook :current_url, before: ->(driver)      { driver.spy << "before_hook1" },
+                             after:  ->(driver, ret) { driver.spy << "after_hook1" }
+          hook :current_url, before: ->(driver)      { driver.spy << "before_hook2" },
+                             after:  ->(driver, ret) { driver.spy << "after_hook2" }
         end
       end
 
@@ -22,7 +24,7 @@ describe Selenium::WebDriver::Driver, "with", Selenium::More::Hooks do
       let(:driver)          {           klass.for :remote, desired_capabilities: :htmlunit }
 
       it "is called before and after in order" do
-        expect { driver.current_url }.to change { driver.spy }.to(%w[ before_hook after_hook ])
+        expect { driver.current_url }.to change { driver.spy }.to(%w[ before_hook2 before_hook1 after_hook1 after_hook2 ])
       end
 
       it "returns value as is" do

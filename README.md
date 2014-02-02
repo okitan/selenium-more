@@ -4,11 +4,11 @@ Selenium WebDriver utilities.
 
 ## Features
 
-* hook interface to selenium-driver
+* hook interface to selenium-webdriver
 * utilities for test
-** session management
-** implicit and explicit wait
-** retry
+ * session management
+ * implicit and explicit wait
+ * retry
 
 ## Installation
 
