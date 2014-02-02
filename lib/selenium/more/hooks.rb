@@ -8,7 +8,7 @@ module Selenium::More
 
     module ClassMethods
       def hook(method, opts)
-        if self.instance_methods.include?(method.to_sym)
+        if instance_methods.include?(method.to_sym)
           mod = Module.new do
             define_method method do |*args|
               opts[:before].call(self)     if opts[:before]
@@ -19,7 +19,7 @@ module Selenium::More
             end
           end
 
-          self.prepend(mod)
+          prepend(mod)
         else
           raise NoMethodError, "no #{method} to hook"
         end
