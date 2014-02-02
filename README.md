@@ -42,6 +42,10 @@ T.B.D.
 
 T.B.D.
 
+## Development
+
+java is needed to run selenium-server-standalone
+
 ## Contributing
 
 1. Fork it ( http://github.com/<my-github-username>/selenium-more/fork )

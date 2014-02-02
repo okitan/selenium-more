@@ -20,6 +20,8 @@ _DESCRIPTION_
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  spec.required_ruby_version = "~> 2.0"
+
   spec.add_runtime_dependency "selenium-webdriver"
 
   spec.add_development_dependency "bundler", "~> 1.5"
@@ -27,6 +29,9 @@ _DESCRIPTION_
 
   # test
   spec.add_runtime_dependency "rspec", "~> 3.0.0.beta"
+
+  # to run selenium-standalone-server
+  spec.add_runtime_dependency "selenium-connect"
 
   # auto test
   spec.add_runtime_dependency "guard-rspec"
