@@ -11,9 +11,11 @@ module Selenium::More
         if self.instance_methods.include?(method.to_sym)
           mod = Module.new do
             define_method method do |*args|
-              instance_eval(&opts[:before]) if opts[:before]
-              super(*args)
-              instance_eval(&opts[:after])  if opts[:after]
+              opts[:before].call(self)     if opts[:before]
+              ret = super(*args)
+              opts[:after].call(self, ret) if opts[:after]
+
+              ret
             end
           end
 
