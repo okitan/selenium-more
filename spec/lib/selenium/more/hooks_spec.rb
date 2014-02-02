@@ -21,7 +21,7 @@ describe Selenium::WebDriver::Driver, "with", Selenium::More::Hooks do
       let(:original_driver) { described_class.for :remote, desired_capabilities: :htmlunit }
       let(:driver)          {           klass.for :remote, desired_capabilities: :htmlunit }
 
-      it "works" do
+      it "is called before and after in order" do
         expect { driver.current_url }.to change { driver.spy }.to(%w[ before_hook after_hook ])
       end
 
