@@ -6,22 +6,26 @@ module Selenium::More
       base.extend(ClassMethods)
     end
 
+    def self.module_to_prepend(method_name, before: nil, after: nil)
+      raise ArgumentError, "at least one of before or after is needed" unless before || after
+
+      Module.new do
+        define_method method_name do |*args|
+          before.call(self)     if before
+          ret = super(*args)
+          after.call(self, ret) if after
+
+          ret
+        end
+      end
+    end
+
     module ClassMethods
-      def hook(method, opts)
-        if instance_methods.include?(method.to_sym)
-          mod = Module.new do
-            define_method method do |*args|
-              opts[:before].call(self)     if opts[:before]
-              ret = super(*args)
-              opts[:after].call(self, ret) if opts[:after]
-
-              ret
-            end
-          end
-
-          prepend(mod)
+      def hook(method_name, opts)
+        if instance_methods.include?(method_name.to_sym)
+          prepend Hooks.module_to_prepend(method_name, opts)
         else
-          raise NoMethodError, "no #{method} to hook"
+          raise NoMethodError, "no #{method_name} to hook"
         end
       end
     end

@@ -36,7 +36,7 @@ class Selenium::WebDriver::Driver
   include Selenium::More::Hooks
 
   hook :get, before: ->(driver)      { puts driver.current_url }
-             after:  ->(driver, ret) { puts driver.currnent_url }
+             after:  ->(driver, ret) { puts driver.current_url }
 end
 
 driver = Selenium::WebDriver.for :phantomjs
