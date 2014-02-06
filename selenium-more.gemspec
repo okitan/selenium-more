@@ -28,11 +28,11 @@ _DESCRIPTION_
   spec.add_development_dependency "rake"
 
   # test
-  spec.add_runtime_dependency "rspec", "~> 3.0.0.beta"
+  spec.add_development_dependency "rspec", "~> 3.0.0.beta"
 
   # to run selenium-standalone-server
-  spec.add_runtime_dependency "selenium-connect"
+  spec.add_development_dependency "selenium-connect"
 
   # auto test
-  spec.add_runtime_dependency "guard-rspec"
+  spec.add_development_dependency "guard-rspec"
 end
