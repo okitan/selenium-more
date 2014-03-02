@@ -3,16 +3,21 @@ require "spec_helper"
 require "selenium/more/hooks"
 
 describe Selenium::WebDriver::Driver, "with", Selenium::More::Hooks do
+  let(:base_class) do
+    Class.new(described_class) do
+      include Selenium::More::Hooks
+
+      def spy
+        @spy ||= []
+      end
+      attr_writer :spy
+    end
+  end
+
   context ".hook" do
     context "of before and after" do
       let(:klass) do
-        Class.new(described_class) do
-          include Selenium::More::Hooks
-
-          def spy
-            @spy ||= []
-          end
-
+        Class.new(base_class) do
           hook :current_url, before: ->(driver)      { driver.spy << "before_hook1" },
                              after:  ->(driver, ret) { driver.spy << "after_hook1" }
           hook :current_url, before: ->(driver)      { driver.spy << "before_hook2" },
@@ -34,11 +39,7 @@ describe Selenium::WebDriver::Driver, "with", Selenium::More::Hooks do
 
     context "of after" do
       let(:klass) do
-        Class.new(described_class) do
-          include Selenium::More::Hooks
-
-          attr_accessor :spy
-
+        Class.new(base_class) do
           hook :current_url, after:  ->(driver, ret) { driver.spy = ret }
         end
       end
@@ -54,9 +55,7 @@ describe Selenium::WebDriver::Driver, "with", Selenium::More::Hooks do
     context "when no method is available" do
       it "raise NoMethodError" do
         expect {
-          Class.new(described_class) do
-            include Selenium::More::Hooks
-
+          Class.new(base_class) do
             hook :hoge, before: ->(driver) { driver }
           end
         }.to raise_exception(NoMethodError, "no hoge to hook")
@@ -65,15 +64,7 @@ describe Selenium::WebDriver::Driver, "with", Selenium::More::Hooks do
   end
 
   context "#hook" do
-    let(:klass) do
-      Class.new(described_class) do
-        include Selenium::More::Hooks
-
-        def spy
-          @spy ||= []
-        end
-      end
-    end
+    let(:klass) { base_class }
 
     let(:driver) do
       driver = klass.for :remote, desired_capabilities: :htmlunit
@@ -91,13 +82,7 @@ describe Selenium::WebDriver::Driver, "with", Selenium::More::Hooks do
 
   context "convination with .hook and #hook" do
       let(:klass) do
-        Class.new(described_class) do
-          include Selenium::More::Hooks
-
-          def spy
-            @spy ||= []
-          end
-
+        Class.new(base_class) do
           hook :current_url, before: ->(driver)      { driver.spy << "before_hook1" },
                              after:  ->(driver, ret) { driver.spy << "after_hook1" }
         end
