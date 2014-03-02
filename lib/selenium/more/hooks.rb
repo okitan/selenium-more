@@ -11,9 +11,9 @@ module Selenium::More
 
       Module.new do
         define_method method_name do |*args|
-          before.call(self)     if before
+          before.call(self, *args)     if before
           ret = super(*args)
-          after.call(self, ret) if after
+          after.call(self, ret, *args) if after
 
           ret
         end

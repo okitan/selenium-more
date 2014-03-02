@@ -35,8 +35,8 @@ Sample Code:
 class Selenium::WebDriver::Driver
   include Selenium::More::Hooks
 
-  hook :get, before: ->(driver)      { puts driver.current_url }
-             after:  ->(driver, ret) { puts driver.current_url }
+  hook :get, before: ->(driver, url)      { puts driver.current_url }
+             after:  ->(driver, ret, url) { puts driver.current_url }
 end
 
 driver = Selenium::WebDriver.for :phantomjs
@@ -58,8 +58,8 @@ class Selenium::WebDriver::Driver
 end
 
 driver = Selenium::WebDriver.for :phantomjs
-driver.hook :get, before: ->(driver)      { puts driver.current_url }
-                  after:  ->(driver, ret) { puts driver.current_url }
+driver.hook :get, before: ->(driver, url)      { puts driver.current_url }
+                  after:  ->(driver, ret, url) { puts driver.current_url }
 
 driver.get "http://example.com/"
 ```

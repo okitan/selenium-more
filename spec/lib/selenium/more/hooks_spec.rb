@@ -37,6 +37,20 @@ describe Selenium::WebDriver::Driver, "with", Selenium::More::Hooks do
       end
     end
 
+    context "of before" do
+      let(:klass) do
+        Class.new(base_class) do
+          hook :get, before:  ->(driver, url) { driver.spy = url }
+        end
+      end
+
+      let(:driver) { klass.for :remote, desired_capabilities: :htmlunit }
+
+      it "passes args to before hook" do
+        expect { driver.get "about:blank" }.to change { driver.spy }.to("about:blank")
+      end
+    end
+
     context "of after" do
       let(:klass) do
         Class.new(base_class) do
