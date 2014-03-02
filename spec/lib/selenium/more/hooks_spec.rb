@@ -88,4 +88,30 @@ describe Selenium::WebDriver::Driver, "with", Selenium::More::Hooks do
       expect { driver.current_url }.to change { driver.spy }.to(%w[ before_hook2 before_hook1 after_hook1 after_hook2 ])
     end
   end
+
+  context "convination with .hook and #hook" do
+      let(:klass) do
+        Class.new(described_class) do
+          include Selenium::More::Hooks
+
+          def spy
+            @spy ||= []
+          end
+
+          hook :current_url, before: ->(driver)      { driver.spy << "before_hook1" },
+                             after:  ->(driver, ret) { driver.spy << "after_hook1" }
+        end
+      end
+
+      let(:driver) do
+        driver = klass.for :remote, desired_capabilities: :htmlunit
+        driver.hook :current_url, before: ->(driver)      { driver.spy << "before_hook2" },
+                                  after:  ->(driver, ret) { driver.spy << "after_hook2" }
+        driver
+      end
+
+      it "is called before and after in order" do
+        expect { driver.current_url }.to change { driver.spy }.to(%w[ before_hook2 before_hook1 after_hook1 after_hook2 ])
+      end
+  end
 end

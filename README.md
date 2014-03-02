@@ -5,7 +5,7 @@ Selenium WebDriver utilities.
 ## Features
 
 * hook interface to selenium-webdriver
-* utilities for test
+* utilities for test (not yet)
  * session management
  * implicit and explicit wait
  * retry
@@ -48,6 +48,20 @@ It prints.
 ```
 about:blank
 http://example.com/
+```
+
+You can also add hook to each instance of ::Selenium::WebDriver::Driver. It results the same with above.
+
+```
+class Selenium::WebDriver::Driver
+  include Selenium::More::Hooks
+end
+
+driver = Selenium::WebDriver.for :phantomjs
+driver.hook :get, before: ->(driver)      { puts driver.current_url }
+                  after:  ->(driver, ret) { puts driver.current_url }
+
+driver.get "http://example.com/"
 ```
 
 ### session management
