@@ -20,6 +20,14 @@ module Selenium::More
       end
     end
 
+    def hook(method_name, opts)
+      if respond_to?(method_name.to_sym)
+        self.singleton_class.prepend Hooks.module_to_prepend(method_name, opts)
+      else
+        raise NoMethodError, "no #{method_name} to hook"
+      end
+    end
+
     module ClassMethods
       def hook(method_name, opts)
         if instance_methods.include?(method_name.to_sym)
