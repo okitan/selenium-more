@@ -18,6 +18,11 @@ module Selenium::More::Hooks
       save_screenshot(p next_sequential_capture_filename) unless current_url == "about:blank"
     end
 
+    def reset_sequential_capture
+      @capture_sequence.times {|i| File.delete(sequential_capture_filename(i) }
+      @capture_sequence = 0
+    end
+
     def sequential_capture_dir
       @sequential_capture_dir || Selenium::More.configuration.sequential_capture_dir || Dir.tmpdir
     end
