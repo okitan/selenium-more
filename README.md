@@ -52,7 +52,7 @@ http://example.com/
 
 You can also add hook to each instance of ::Selenium::WebDriver::Driver. It results the same with above.
 
-```
+```ruby
 class Selenium::WebDriver::Driver
   include Selenium::More::Hooks
 end
