@@ -22,7 +22,8 @@ module Selenium::More
 
     def hook(method_name, opts)
       if respond_to?(method_name.to_sym)
-        self.singleton_class.prepend Hooks.module_to_prepend(method_name, opts)
+        # when ruby < 2.1.0, prepend is private method
+        self.singleton_class.__send__(:prepend, Hooks.module_to_prepend(method_name, opts))
       else
         raise NoMethodError, "no #{method_name} to hook"
       end
