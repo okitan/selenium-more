@@ -1,4 +1,4 @@
-require "selenium/webdriver"
+require "selenium/more"
 
 module Selenium::More
   module Hooks

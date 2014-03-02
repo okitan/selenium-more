@@ -32,6 +32,8 @@ When you include ::Selenium::More::Hooks to ::Selenium::WebDriver::Driver, you c
 
 Sample Code:
 ```ruby
+require "selenium/more/hooks"
+
 class Selenium::WebDriver::Driver
   include Selenium::More::Hooks
 
@@ -53,6 +55,8 @@ http://example.com/
 You can also add hook to each instance of ::Selenium::WebDriver::Driver. It results the same with above.
 
 ```ruby
+require "selenium/more/hooks"
+
 class Selenium::WebDriver::Driver
   include Selenium::More::Hooks
 end
