@@ -78,39 +78,53 @@ describe Selenium::WebDriver::Driver, "with", Selenium::More::Hooks do
   end
 
   context "#hook" do
-    let(:klass) { base_class }
-
-    let(:driver) do
-      driver = klass.for :remote, desired_capabilities: :htmlunit
-      driver.hook :current_url, before: ->(driver)      { driver.spy << "before_hook1" },
-                                after:  ->(driver, ret) { driver.spy << "after_hook1" }
-      driver.hook :current_url, before: ->(driver)      { driver.spy << "before_hook2" },
-                                after:  ->(driver, ret) { driver.spy << "after_hook2" }
-      driver
-    end
-
-    it "is called before and after in order" do
-      expect { driver.current_url }.to change { driver.spy }.to(%w[ before_hook2 before_hook1 after_hook1 after_hook2 ])
-    end
-  end
-
-  context "convination with .hook and #hook" do
-      let(:klass) do
-        Class.new(base_class) do
-          hook :current_url, before: ->(driver)      { driver.spy << "before_hook1" },
-                             after:  ->(driver, ret) { driver.spy << "after_hook1" }
-        end
-      end
+    context "of before and after" do
+      let(:klass) { base_class }
 
       let(:driver) do
         driver = klass.for :remote, desired_capabilities: :htmlunit
+        driver.hook :current_url, before: ->(driver)      { driver.spy << "before_hook1" },
+        after:  ->(driver, ret) { driver.spy << "after_hook1" }
         driver.hook :current_url, before: ->(driver)      { driver.spy << "before_hook2" },
-                                  after:  ->(driver, ret) { driver.spy << "after_hook2" }
+        after:  ->(driver, ret) { driver.spy << "after_hook2" }
         driver
       end
 
       it "is called before and after in order" do
         expect { driver.current_url }.to change { driver.spy }.to(%w[ before_hook2 before_hook1 after_hook1 after_hook2 ])
       end
+    end
+
+    context "when no method is available" do
+      let(:klass) { base_class }
+
+      let(:driver) { base_class.for :remote, desired_capabilities: :htmlunit }
+
+      it "raise NoMethodError" do
+        expect {
+          driver.hook :hoge, before: ->(driver) { driver }
+        }.to raise_exception(NoMethodError, "no hoge to hook")
+      end
+    end
+  end
+
+  context "convination with .hook and #hook" do
+    let(:klass) do
+      Class.new(base_class) do
+        hook :current_url, before: ->(driver)      { driver.spy << "before_hook1" },
+                           after:  ->(driver, ret) { driver.spy << "after_hook1" }
+      end
+    end
+
+    let(:driver) do
+      driver = klass.for :remote, desired_capabilities: :htmlunit
+      driver.hook :current_url, before: ->(driver)      { driver.spy << "before_hook2" },
+      after:  ->(driver, ret) { driver.spy << "after_hook2" }
+      driver
+    end
+
+    it "is called before and after in order" do
+      expect { driver.current_url }.to change { driver.spy }.to(%w[ before_hook2 before_hook1 after_hook1 after_hook2 ])
+    end
   end
 end
