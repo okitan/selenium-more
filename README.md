@@ -68,6 +68,15 @@ driver.hook :get, before: ->(driver, url)      { puts driver.current_url }
 driver.get "http://example.com/"
 ```
 
+Many build-in hooks are available. See examples or lib/selenium/more/hooks directory.
+
+#### Saving Movie
+
+`Seleinium::More::Hooks::Movie` enables to save whole driver's activity as a movie.
+It has capability to switch the way to make movie, but currently only imagemagick is available.
+
+See examples/movie.rb
+
 ### session management
 
 T.B.D.

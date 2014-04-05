@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+# @note This example need imagemagick installed
+
 require "bundler/setup"
 require "selenium/more"
 
