@@ -5,5 +5,8 @@ module Selenium::More
 
     # selenium/more/hooks/sequential_capture
     attr_accessor :sequential_capture_dir, :sequential_capture_pattern
+
+    # seleniu/more/hooks/movie
+    attr_accessor :movie_conversion_strategy
   end
 end

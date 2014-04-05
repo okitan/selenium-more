@@ -15,20 +15,26 @@ module Selenium::More::Hooks
     attr_writer :sequential_capture_dir, :sequential_capture_pattern
 
     def save_sequential_capture
-      save_screenshot(p next_sequential_capture_filename) unless current_url == "about:blank"
+      save_screenshot(next_sequential_capture_filename) unless current_url == "about:blank"
     end
 
     def reset_sequential_capture
-      @capture_sequence.times {|i| File.delete(sequential_capture_filename(i) }
+      @capture_sequence.times {|i| File.delete(sequential_capture_filename(i)) }
       @capture_sequence = 0
     end
 
     def sequential_capture_dir
-      @sequential_capture_dir || Selenium::More.configuration.sequential_capture_dir || Dir.tmpdir
+      @sequential_capture_dir ||= (
+        Selenium::More.configuration.sequential_capture_dir ||
+        Dir.mktmpdir("selemium-more-sequential-capture")
+      )
     end
 
     def sequential_capture_pattern
-      @sequential_capture_pattern || Selenium::More.configuration.sequential_capture_pattern || "%06d.png"
+      @sequential_capture_pattern ||= (
+        Selenium::More.configuration.sequential_capture_pattern ||
+        "%06d.png"
+      )
     end
 
     protected
